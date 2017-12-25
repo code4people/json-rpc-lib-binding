@@ -1,0 +1,81 @@
+group 'com.nullables'
+version '0.0.1'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'JSON-RPC Library Binding'
+                packaging 'jar'
+                description 'JSON-RPC Library Binding'
+                url 'https://github.com/nullables/json-rpc-lib-binding'
+
+                scm {
+                    connection 'scm:git:git://github.com/nullables/json-rpc-lib-binding.git'
+                    developerConnection 'scm:git:ssh://github.com/nullables/json-rpc-lib-binding.git'
+                    url 'https://github.com/nullables/json-rpc-lib-binding'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'mobratil'
+                        name 'Martin Obrátil'
+                        email 'martin.obratil@icloud.com'
+                        organization 'Nullables'
+                        organizationUrl 'https://www.nullables.com'
+                    }
+                }
+            }
+        }
+    }
+}
