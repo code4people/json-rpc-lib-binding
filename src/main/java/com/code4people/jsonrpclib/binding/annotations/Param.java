@@ -1,4 +1,4 @@
-package com.nullables.jsonrpclib.binding.annotations;
+package com.code4people.jsonrpclib.binding.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -8,6 +8,6 @@ import static java.lang.annotation.ElementType.PARAMETER;
 
 @Target(PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Optional {
-
+public @interface Param {
+    String value();
 }

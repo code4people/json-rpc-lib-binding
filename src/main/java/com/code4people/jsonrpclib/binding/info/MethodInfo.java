@@ -1,11 +1,11 @@
-package com.nullables.jsonrpclib.binding.info;
+package com.code4people.jsonrpclib.binding.info;
 
-import com.nullables.jsonrpclib.binding.BindingErrorException;
-import com.nullables.jsonrpclib.binding.annotations.Bind;
-import com.nullables.jsonrpclib.binding.annotations.BindToSingleArgument;
-import com.nullables.jsonrpclib.binding.annotations.ErrorMapping;
-import com.nullables.jsonrpclib.binding.annotations.ParamsType;
-import com.nullables.jsonrpclib.binding.annotations.Error;
+import com.code4people.jsonrpclib.binding.BindingErrorException;
+import com.code4people.jsonrpclib.binding.annotations.Error;
+import com.code4people.jsonrpclib.binding.annotations.Bind;
+import com.code4people.jsonrpclib.binding.annotations.BindToSingleArgument;
+import com.code4people.jsonrpclib.binding.annotations.ErrorMapping;
+import com.code4people.jsonrpclib.binding.annotations.ParamsType;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

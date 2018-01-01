@@ -1,4 +1,4 @@
-package com.nullables.jsonrpclib.binding.info;
+package com.code4people.jsonrpclib.binding.info;
 
 public class ErrorInfo {
     public final int code;

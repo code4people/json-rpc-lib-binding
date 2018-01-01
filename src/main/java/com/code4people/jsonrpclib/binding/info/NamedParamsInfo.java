@@ -1,8 +1,8 @@
-package com.nullables.jsonrpclib.binding.info;
+package com.code4people.jsonrpclib.binding.info;
 
-import com.nullables.jsonrpclib.binding.annotations.Optional;
-import com.nullables.jsonrpclib.binding.annotations.Param;
-import com.nullables.jsonrpclib.binding.BindingErrorException;
+import com.code4people.jsonrpclib.binding.BindingErrorException;
+import com.code4people.jsonrpclib.binding.annotations.Optional;
+import com.code4people.jsonrpclib.binding.annotations.Param;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;

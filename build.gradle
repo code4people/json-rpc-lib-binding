@@ -1,4 +1,4 @@
-group 'com.nullables'
+group 'com.code4people'
 version '0.0.1'
 
 apply plugin: 'java'
@@ -31,15 +31,15 @@ artifacts {
 task createPom << {
     pom {
         project {
-            name 'JSON-RPC Library Binding'
+            name 'json-rpc-lib-binding'
             packaging 'jar'
-            description 'JSON-RPC Library Client'
-            url 'https://github.com/nullables/json-rpc-lib-binding'
+            description 'Base component of json-rpc-lib'
+            url 'https://github.com/code4people/json-rpc-lib-binding'
 
             scm {
-                connection 'scm:git:git://github.com/nullables/json-rpc-lib-binding.git'
-                developerConnection 'scm:git:ssh://github.com/nullables/json-rpc-lib-binding.git'
-                url 'https://github.com/nullables/json-rpc-lib-binding'
+                connection 'scm:git:git://github.com/code4people/json-rpc-lib-binding.git'
+                developerConnection 'scm:git:ssh://github.com/code4people/json-rpc-lib-binding.git'
+                url 'https://github.com/code4people/json-rpc-lib-binding'
             }
 
             licenses {
@@ -53,9 +53,9 @@ task createPom << {
                 developer {
                     id 'mobratil'
                     name 'Martin Obrátil'
-                    email 'martin.obratil@icloud.com'
-                    organization 'Nullables'
-                    organizationUrl 'https://www.nullables.com'
+                    email 'martin.obratil@gmail.com'
+                    organization 'code4people'
+                    organizationUrl 'https://www.code4people.com'
                 }
             }
         }

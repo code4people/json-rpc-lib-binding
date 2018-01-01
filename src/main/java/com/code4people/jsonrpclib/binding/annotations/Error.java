@@ -1,4 +1,4 @@
-package com.nullables.jsonrpclib.binding.annotations;
+package com.code4people.jsonrpclib.binding.annotations;
 
 import java.lang.annotation.Retention;
 

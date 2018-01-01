@@ -1,6 +1,6 @@
-package com.nullables.jsonrpclib.binding;
+package com.code4people.jsonrpclib.binding;
 
-import com.nullables.jsonrpclib.binding.info.MethodInfo;
+import com.code4people.jsonrpclib.binding.info.MethodInfo;
 
 import java.util.HashMap;
 import java.util.List;

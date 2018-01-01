@@ -1,6 +1,6 @@
-package com.nullables.jsonrpclib.binding.info;
+package com.code4people.jsonrpclib.binding.info;
 
-import com.nullables.jsonrpclib.binding.BindingErrorException;
+import com.code4people.jsonrpclib.binding.BindingErrorException;
 
 public class MissingParamsInfo {
 

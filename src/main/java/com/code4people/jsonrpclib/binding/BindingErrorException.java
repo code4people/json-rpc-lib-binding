@@ -1,4 +1,4 @@
-package com.nullables.jsonrpclib.binding;
+package com.code4people.jsonrpclib.binding;
 
 public class BindingErrorException extends RuntimeException {
 
