@@ -5,6 +5,7 @@ import com.code4people.jsonrpclib.binding.annotations.Optional;
 import com.code4people.jsonrpclib.binding.annotations.Param;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,24 +14,24 @@ public class NamedParamsInfo {
 
     private List<Parameter> parameters;
 
-    public static NamedParamsInfo create(Method method) throws BindingErrorException {
+    public static NamedParamsInfo create(java.lang.reflect.Parameter[] parameters, String methodName) throws BindingErrorException {
 
-        List<Parameter> parameters = new ArrayList<>(method.getParameters().length);
-        for (java.lang.reflect.Parameter parameter : method.getParameters()) {
+        List<Parameter> params = new ArrayList<>(parameters.length);
+        for (java.lang.reflect.Parameter parameter : parameters) {
             Param annotation = parameter.getAnnotation(Param.class);
             if (annotation == null) {
                 String message = String.format(
                         "Missing @Param annotation on method: '%s'. You have to place @Param annotation on method parameter explicitly when method has named params.",
-                        method.getName());
+                        methodName);
                 throw new BindingErrorException(message);
             }
-            parameters.add(new Parameter(
+            params.add(new Parameter(
                     annotation.value(),
                     parameter.isAnnotationPresent(Optional.class),
                     parameter.getParameterizedType()));
         }
 
-        return new NamedParamsInfo(parameters);
+        return new NamedParamsInfo(params);
     }
 
     private NamedParamsInfo(List<Parameter> parameters) throws BindingErrorException {
