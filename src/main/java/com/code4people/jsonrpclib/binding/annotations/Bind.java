@@ -3,6 +3,7 @@ package com.code4people.jsonrpclib.binding.annotations;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import static com.code4people.jsonrpclib.binding.annotations.ParamsType.DEFAULT;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -10,5 +11,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface Bind {
     String as() default "";
-    ParamsType[] paramsTypes();
+    ParamsType paramsType() default DEFAULT;
 }
