@@ -8,5 +8,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface Error {
     Class<? extends Throwable> exception();
     int code();
-    String message();
+    String message() default "";
 }
