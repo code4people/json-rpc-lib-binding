@@ -10,9 +10,11 @@ import com.code4people.jsonrpclib.binding.info.MethodInfo;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MethodInfoFactory {
 
@@ -25,40 +27,41 @@ public class MethodInfoFactory {
     }
 
     public List<? extends MethodInfo> createFromClass(Class<?> clazz) {
+        ErrorMapping errorMapping = clazz.getAnnotation(ErrorMapping.class);
+        Error[] classErrors = errorMapping == null
+                ? new Error[0]
+                : errorMapping.value();
+        if (Arrays.stream(classErrors).map(Error::exception).distinct().count() != classErrors.length) {
+            String message = String.format("Class '%s' has duplicated exceptions mapping.", clazz.toString());
+            throw new BindingErrorException(message);
+        }
+
         return Arrays.stream(clazz.getDeclaredMethods())
                 .filter(m -> m.isAnnotationPresent(Bind.class)
                         || m.isAnnotationPresent(BindToSingleArgument.class))
-                .map(this::createFromMethod)
+                .map(m -> createFromMethod(m, classErrors))
                 .collect(Collectors.toList());
     }
 
-    public MethodInfo createFromMethod(Method method) {
+    public MethodInfo createFromMethod(Method method, Error[] classErrors) {
         ErrorMapping errorMapping = method.getAnnotation(ErrorMapping.class);
-        Error[] errors = errorMapping == null
+        Error[] methodErrors = errorMapping == null
                 ? new Error[0]
                 : errorMapping.value();
-        if (Arrays.stream(errors).map(Error::exception).distinct().count() != errors.length) {
+        if (Arrays.stream(methodErrors).map(Error::exception).distinct().count() != methodErrors.length) {
             String message = String.format("Method '%s' has duplicated exceptions mapping.", method.toString());
             throw new BindingErrorException(message);
         }
 
-        List<Error> invalidErrors = Arrays.stream(errors)
-                .filter(error -> !Throwable.class.isAssignableFrom(error.exception()))
-                .collect(Collectors.toList());
-
-        if (!invalidErrors.isEmpty()) {
-            throw new BindingErrorException("Invalid error mappings: " + invalidErrors);
-        }
-
-        Map<Class<? extends Throwable>, ErrorInfo> errorInfos =
-                Arrays.stream(errors)
-                        .collect(Collectors.toMap(Error::exception, e -> new ErrorInfo(e.code(), e.message())));
+        Map<Class<? extends Throwable>, ErrorInfo> errorsMap = new HashMap<>();
+        Stream.concat(Arrays.stream(classErrors), Arrays.stream(methodErrors))
+                .forEach(e -> errorsMap.put(e.exception(), new ErrorInfo(e.code(), e.message())));
 
         if (method.isAnnotationPresent(Bind.class)) {
-            return granularParamsMethodInfoFactory.create(method, errorInfos);
+            return granularParamsMethodInfoFactory.create(method, errorsMap);
         }
         else if (method.isAnnotationPresent(BindToSingleArgument.class)) {
-            return singleArgumentMethodInfoFactory.create(method, errorInfos);
+            return singleArgumentMethodInfoFactory.create(method, errorsMap);
         }
         else {
             throw new IllegalArgumentException("No annotation exposing method is present.");
